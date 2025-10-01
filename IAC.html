@@ -1049,7 +1049,7 @@
             
             // 加载数据
             try {
-                const response = await fetch('/config.json');
+                const response = await fetch('config.json');
                 if (response.ok) {
                     const config = await response.json();
                     appData = config.categories || config;
