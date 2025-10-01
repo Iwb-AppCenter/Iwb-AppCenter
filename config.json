@@ -3,29 +3,29 @@
     "description": "软件下载中心配置文件，包含分类和软件信息",
     "categories": [
         {
-            "class_name": "开发工具",
-            "description": "用于软件开发的相关工具",
+            "class_name": "课表看板",
+            "description": "显示课程及其他信息",
             "apps": [
                 {
-                    "app_name": "VS Code",
-                    "app_version": "1.83.1",
-                    "app_owner": "Microsoft",
-                    "app_icon": "icons/vscode.png",
-                    "app_website": "https://code.visualstudio.com/",
-                    "app_downloadurl": "https://code.visualstudio.com/Download",
-                    "app_downloadmirror": "https://mirror.example.com/vscode"
+                    "app_name": "Classisland",
+                    "app_version":"1.7.0.1",
+                    "app_owner": "Hello_WRC",
+                    "app_icon": "icons/classisland.png",
+                    "app_website": "https://classisland.tech",
+                    "app_downloadurl": "https://classisland.tech/download",
+                    "app_downloadmirror": "https://"
                 },
                 {
-                    "app_name": "Git",
-                    "app_version": "2.42.0",
-                    "app_owner": "Git Foundation",
-                    "app_icon": "icons/git.png",
-                    "app_website": "https://git-scm.com/",
-                    "app_downloadurl": "https://git-scm.com/downloads",
-                    "app_downloadmirror": "https://mirror.example.com/git"
+                    "app_name": "ClassWidgets",
+                    "app_version": "1.2.0.1",
+                    "app_owner": "Rinlit",
+                    "app_icon": "icons/classwidgets.png",
+                    "app_website": "https://classwidgets.rinlit.cn/zh/",
+                    "app_downloadurl": "https://classwidgets.rinlit.cn/zh/download/",
+                    "app_downloadmirror": "httr.example.com/git"
                 },
                 {
-                    "app_name": "Node.js",
+                    "app_name": "",
                     "app_version": "20.9.0",
                     "app_owner": "Node.js Foundation",
                     "app_icon": "icons/nodejs.png",
