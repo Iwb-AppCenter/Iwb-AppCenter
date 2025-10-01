@@ -1,0 +1,1077 @@
+<html lang="zh-CN" translate="no"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>软件下载中心</title>
+    <!-- 引入外部资源 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+    
+    <!-- 配置Tailwind自定义颜色和断点 -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                screens: {
+                    'sm': '640px',
+                    'md': '768px',
+                    'lg': '1024px',  // 宽屏断点
+                    'xl': '1280px',
+                },
+                extend: {
+                    colors: {
+                        // 浅色模式颜色
+                        'md-primary': '#4A90E2',
+                        'md-primary-light': '#7FB0F2',
+                        'md-primary-dark': '#3066B0',
+                        'md-secondary': '#03DAC6',
+                        'md-background': '#FFFFFF',
+                        'md-surface': '#FFFFFF',
+                        'md-surface-variant': '#F2F2F7',
+                        'md-error': '#B00020',
+                        'md-on-primary': '#000000',
+                        'md-on-surface': '#000000',
+                        'md-on-surface-variant': '#424242',
+                        'md-outline': '#D1D1D6',
+                        'warning-light': '#FFE8E8', // 浅红色警告背景
+                        'warning-text': '#D32F2F',  // 警告文字颜色
+                        
+                        // 深色模式颜色
+                        'dark-md-primary': '#8AB4F8',
+                        'dark-md-primary-light': '#3367D6',
+                        'dark-md-primary-dark': '#1A56DB',
+                        'dark-md-background': '#121212',
+                        'dark-md-surface': '#1E1E1E',
+                        'dark-md-surface-variant': '#2D2D2D',
+                        'dark-md-on-primary': '#FFFFFF',
+                        'dark-md-on-surface': '#E0E0E0',
+                        'dark-md-on-surface-variant': '#BBBBBB',
+                        'dark-md-outline': '#424242',
+                        'dark-warning-light': '#4A1A1A', // 深色模式警告背景
+                        'dark-warning-text': '#FFCDD2',   // 深色模式警告文字
+                    },
+                    fontFamily: {
+                        'roboto': ['Roboto', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'md-elevation-1': '0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)',
+                        'md-elevation-2': '0 3px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12)',
+                        'md-elevation-4': '0 6px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12)',
+                    }
+                },
+            }
+        }
+    </script>
+    
+    <!-- 自定义工具类和动画 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .md-card {
+                @apply bg-md-surface rounded-2xl shadow-md-elevation-1 transition-all duration-300 hover:shadow-md-elevation-2 overflow-hidden border border-md-outline;
+            }
+            .md-btn {
+                @apply px-4 py-3 rounded-full transition-all duration-200 font-medium flex items-center justify-center gap-2 transform hover:scale-[1.02] active:scale-[0.98];
+            }
+            .md-btn-primary {
+                @apply bg-md-primary text-white hover:bg-md-primary-dark;
+            }
+            .md-btn-secondary {
+                @apply bg-md-surface-variant text-md-on-surface-variant hover:bg-opacity-80;
+            }
+            .md-btn-outline {
+                @apply border border-md-outline text-md-on-surface hover:bg-md-surface-variant;
+            }
+            /* 侧边栏导航项使用旧版样式：左直角右100%圆角 */
+            .md-nav-item {
+                @apply w-full text-left px-4 py-3 transition-all duration-200 hover:bg-md-surface-variant cursor-pointer flex items-center justify-between rounded-r-[100px] mx-0 my-0.5 relative overflow-hidden;
+            }
+            .md-nav-item-active {
+                @apply bg-md-primary-light text-md-on-primary font-medium pl-4;
+            }
+            .md-nav-item-active::before {
+                content: '';
+                @apply absolute left-0 top-0 bottom-0 w-1.5 bg-md-primary rounded-none;
+            }
+            .md-divider {
+                @apply h-px bg-md-outline my-2;
+            }
+            .md-title {
+                @apply text-2xl font-semibold text-md-on-surface;
+            }
+            .md-headline {
+                @apply text-3xl font-bold text-md-on-surface;
+            }
+            .md-body-secondary {
+                @apply text-base text-md-on-surface-variant;
+            }
+            .md-input {
+                @apply px-6 py-3 rounded-full border border-md-outline focus:outline-none focus:ring-2 focus:ring-md-primary focus:border-transparent transition-all;
+            }
+            .icon-text-gap {
+                @apply flex items-center gap-3;
+            }
+            
+            /* 水波纹动画 */
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                transform: scale(0);
+                animation: ripple 0.6s linear;
+                background-color: rgba(255, 255, 255, 0.3);
+            }
+            
+            @keyframes ripple {
+                to {
+                    transform: scale(2.5);
+                    opacity: 0;
+                }
+            }
+            
+            /* 过渡动画类 */
+            .sidebar-transition {
+                transition: width 300ms ease-in-out, transform 300ms ease-in-out;
+            }
+            
+            .content-transition {
+                transition: width 300ms ease-in-out, margin-left 300ms ease-in-out;
+            }
+            
+            /* 卡片动画 */
+            .card-enter {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            
+            .card-enter-active {
+                opacity: 1;
+                transform: translateY(0);
+                transition: opacity 300ms ease, transform 300ms ease;
+            }
+            
+            /* 警告Banner样式 */
+            .dev-warning-banner {
+                @apply py-3 px-4 flex items-center justify-between w-full transition-all duration-300;
+            }
+            
+            .warning-icon {
+                @apply mr-3 text-lg;
+            }
+            
+            .warning-text {
+                @apply flex-grow text-sm md:text-base;
+            }
+            
+            .close-warning {
+                @apply p-1.5 rounded-full hover:bg-opacity-20 transition-colors cursor-pointer;
+            }
+            
+            /* 深色模式样式 */
+            html.dark {
+                background-color: #121212 !important;
+                color: #E0E0E0 !important;
+            }
+            html.dark body {
+                background-color: #121212 !important;
+                color: #E0E0E0 !important;
+            }
+            html.dark #sidebar {
+                background-color: #1E1E1E !important;
+                border-color: #424242 !important;
+            }
+            html.dark header {
+                background-color: #1E1E1E !important;
+                border-color: #424242 !important;
+            }
+            html.dark .md-card {
+                background-color: #1E1E1E !important;
+                border-color: #424242 !important;
+            }
+            html.dark .md-surface-variant,
+            html.dark .md-nav-item:hover {
+                background-color: #2D2D2D !important;
+            }
+            html.dark .md-on-surface,
+            html.dark h1,
+            html.dark h2,
+            html.dark h3,
+            html.dark p,
+            html.dark span {
+                color: #E0E0E0 !important;
+            }
+            html.dark .md-on-surface-variant,
+            html.dark .md-body-secondary {
+                color: #BBBBBB !important;
+            }
+            html.dark .md-outline,
+            html.dark .md-divider {
+                background-color: #424242 !important;
+            }
+            html.dark .md-nav-item-active {
+                background-color: #3367D6 !important;
+                color: #FFFFFF !important;
+            }
+            html.dark .md-nav-item-active::before {
+                background-color: #8AB4F8 !important;
+            }
+            html.dark .app-website,
+            html.dark .text-md-primary,
+            html.dark .material-icons.text-md-primary {
+                color: #8AB4F8 !important;
+            }
+            html.dark .md-btn-primary {
+                background-color: #8AB4F8 !important;
+                color: #FFFFFF !important;
+            }
+            html.dark .md-btn-primary:hover {
+                background-color: #1A56DB !important;
+            }
+            html.dark .md-input {
+                background-color: #2D2D2D !important;
+                border-color: #424242 !important;
+                color: #E0E0E0 !important;
+            }
+            html.dark .md-input::placeholder {
+                color: #BBBBBB !important;
+            }
+            html.dark .material-icons {
+                color: inherit !important;
+            }
+            
+            /* 顶部侧边栏控制按钮样式 - 窄屏专用 */
+            .sidebar-toggle-btn {
+                @apply p-2 transition-all duration-300 w-10 rounded-full transform hover:scale-110 active:scale-95;
+                background: none !important; /* 强制删除背景 */
+                border: none !important;
+            }
+            
+            /* 宽屏专用悬浮按钮 */
+            .sidebar-float-btn {
+                @apply fixed left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full shadow-md-elevation-4
+                       flex items-center justify-center cursor-pointer transition-all duration-300
+                       hover:scale-110 active:scale-95 lg:flex hidden;
+                background-color: var(--md-surface);
+                border: 1px solid var(--md-outline);
+            }
+            
+            /* 按钮隐藏状态 */
+            .sidebar-float-btn.hidden-btn {
+                @apply opacity-0 pointer-events-none transform -translate-x-8;
+            }
+            
+            html:not(.dark) .sidebar-float-btn {
+                --md-surface: #FFFFFF;
+                --md-outline: #D1D1D6;
+                color: #000000;
+            }
+            
+            html.dark .sidebar-float-btn {
+                --md-surface: #1E1E1E;
+                --md-outline: #424242;
+                color: #E0E0E0;
+            }
+            
+            /* 导航栏左侧内容容器 */
+            .nav-left-container {
+                @apply flex items-center transition-all duration-300;
+            }
+            
+            /* Material You 悬浮按钮样式 */
+            .floating-action-button {
+                @apply fixed right-6 bottom-6 w-14 h-14 rounded-full shadow-md-elevation-4 
+                       flex items-center justify-center cursor-pointer transition-all duration-300
+                       hover:scale-110 active:scale-95 z-50 overflow-hidden relative;
+                background: linear-gradient(135deg, #4A90E2, #03DAC6);
+            }
+            
+            html.dark .floating-action-button {
+                background: linear-gradient(135deg, #8AB4F8, #00BFA5);
+            }
+        }
+    </style>
+</head>
+<body class="font-roboto bg-md-background text-md-on-surface min-h-screen flex overflow-hidden p-0 m-0 transition-colors duration-300">
+    <!-- 侧边栏使用上一版本样式 -->
+    <div id="sidebar" class="fixed inset-y-0 left-0 z-20 bg-md-surface border-r border-md-outline sidebar-transition w-0 lg:w-64 transform -translate-x-full lg:translate-x-0">
+        <!-- 侧边栏头部 -->
+        <div class="p-4 border-b border-md-outline flex items-center justify-between">
+            <h1 class="md-title icon-text-gap" id="sidebar-title">
+                <i class="material-icons">category</i>
+                <span>软件分类</span>
+            </h1>
+            <!-- 宽屏设备的收起按钮 -->
+            <button id="sidebar-collapse-btn" class="lg:flex hidden md-btn md-btn-secondary p-2">
+                <i class="material-icons">chevron_left</i>
+            </button>
+        </div>
+        
+        <!-- 分类列表 -->
+        <div id="category-list" class="overflow-y-auto h-[calc(100%-60px)] p-0">
+            <!-- 分类项通过JS动态生成 -->
+        </div>
+    </div>
+    
+    <!-- 宽屏专用悬浮按钮 -->
+    <button id="sidebar-float-btn" class="sidebar-float-btn hidden-btn">
+        <i class="material-icons" id="sidebar-float-icon">menu</i>
+    </button>
+    
+    <!-- 遮罩层 - 窄屏侧边栏展开时显示 -->
+    <div id="sidebar-backdrop" class="fixed inset-0 bg-black bg-opacity-50 z-10 lg:hidden hidden transition-opacity duration-300"></div>
+    
+    <!-- 主内容区 -->
+    <div id="main-content" class="flex-grow flex flex-col overflow-hidden content-transition w-full lg:ml-64">
+        <!-- 顶部导航栏 -->
+        <header class="h-20 bg-md-surface border-b border-md-outline flex items-center justify-between px-4 md:px-6 shadow-sm transition-colors duration-300">
+            <div class="nav-left-container">
+                <!-- 侧边栏切换按钮 - 仅窄屏显示 -->
+                <button id="sidebar-toggle-btn" class="sidebar-toggle-btn mr-3 lg:hidden">
+                    <i class="material-icons" id="sidebar-toggle-icon">menu</i>
+                </button>
+                <i class="material-icons text-md-primary text-2xl" id="main-logo">download</i>
+                <h1 class="text-2xl md:text-3xl font-semibold ml-3" id="main-title">下载中心</h1>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="relative hidden sm:block">
+                    <input type="text" placeholder="搜索软件..." class="md-input w-56 md:w-72 text-lg">
+                </div>
+                <!-- 顶部主题切换按钮 - 仅桌面显示 -->
+                <button id="theme-toggle-top" class="hidden lg:flex md-btn md-btn-secondary p-2">
+                    <i class="material-icons" id="theme-icon-top">dark_mode</i>
+                </button>
+            </div>
+        </header>
+        
+        <!-- 开发警告Banner -->
+        <div id="dev-warning" class="dev-warning-banner bg-warning-light text-warning-text border-b border-warning-text/20">
+            <i class="material-icons warning-icon">warning</i>
+            <span class="warning-text">开发中画面，请以实际发布为准，您正在浏览临时样式</span>
+            <button id="close-warning" class="close-warning">
+                <i class="material-icons">close</i>
+            </button>
+        </div>
+        
+        <!-- 内容区域 -->
+        <div class="flex-grow overflow-y-auto p-4 md:p-6 transition-colors duration-300">
+            <!-- 当前分类标题 - 上移8px -->
+            <div class="mb-6 transform -translate-y-2">
+                <h2 id="current-category" class="md-headline icon-text-gap">
+                    <i class="material-icons text-md-primary">grid_view</i>
+                    <span>全部软件</span>
+                </h2>
+                <p class="md-body-secondary mt-1">浏览和下载所有可用软件</p>
+            </div>
+            
+            <!-- 软件列表 -->
+            <div id="software-list" class="space-y-4">
+                <!-- 软件卡片通过JS动态生成 -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- 软件卡片模板 -->
+    <template id="software-card-template">
+        <div class="md-card group transition-colors duration-300 card-enter">
+            <div class="p-4 md:p-5 flex flex-col md:flex-row items-center gap-4 md:gap-6">
+                <!-- 软件图标 -->
+                <div class="w-20 h-20 rounded-xl bg-md-surface-variant flex items-center justify-center flex-shrink-0 overflow-hidden transition-colors duration-300">
+                    <img class="app-icon w-full h-full object-contain p-1" src="" alt="软件图标">
+                </div>
+                
+                <!-- 软件信息 -->
+                <div class="flex-grow w-full">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                        <div class="flex flex-col">
+                            <h3 class="app-name font-semibold text-xl icon-text-gap">
+                                <span class="app-icon-inline text-md-primary">
+                                    <i class="material-icons text-xl"></i>
+                                </span>
+                                <span></span>
+                            </h3>
+                            <div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1">
+                                <p class="app-version md-body-secondary icon-text-gap">
+                                    <i class="material-icons text-md-on-surface-variant text-sm">tag</i>
+                                    <span></span>
+                                </p>
+                                <p class="app-owner md-body-secondary icon-text-gap">
+                                    <i class="material-icons text-md-on-surface-variant text-sm">person</i>
+                                    <span></span>
+                                </p>
+                            </div>
+                            <a class="app-website text-md-primary text-base hover:underline mt-1 block truncate max-w-md icon-text-gap" href="" target="_blank">
+                                <i class="material-icons text-sm">link</i>
+                                <span></span>
+                            </a>
+                        </div>
+                        
+                        <!-- 按钮组 - 强制竖排单向并列 -->
+                        <div class="flex flex-col gap-2 md:gap-2 justify-start md:justify-end w-full md:w-auto">
+                            <a class="app-website-btn md-btn md-btn-outline icon-text-gap" href="" target="_blank">
+                                <i class="material-icons">language</i>
+                                <span class="hidden sm:inline text-base">官网</span>
+                            </a>
+                            <a class="app-download-btn md-btn md-btn-primary icon-text-gap" href="" target="_blank">
+                                <i class="material-icons">download</i>
+                                <span class="hidden sm:inline text-base">下载</span>
+                            </a>
+                            <a class="app-mirror-btn md-btn md-btn-secondary icon-text-gap" href="" target="_blank">
+                                <i class="material-icons">cloud</i>
+                                <span class="hidden sm:inline text-base">网盘</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        // 深色模式相关功能
+        function checkSystemDarkMode() {
+            return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+        
+        function applyDarkMode(enable) {
+            const html = document.documentElement;
+            const themeIconTop = document.getElementById('theme-icon-top');
+            const devWarning = document.getElementById('dev-warning');
+            
+            if (enable) {
+                html.classList.add('dark');
+                themeIconTop.textContent = 'light_mode';
+                // 更新警告Banner的深色模式样式
+                devWarning.classList.remove('bg-warning-light', 'text-warning-text', 'border-warning-text/20');
+                devWarning.classList.add('bg-dark-warning-light', 'text-dark-warning-text', 'border-dark-warning-text/30');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                html.classList.remove('dark');
+                themeIconTop.textContent = 'dark_mode';
+                // 恢复警告Banner的浅色模式样式
+                devWarning.classList.remove('bg-dark-warning-light', 'text-dark-warning-text', 'border-dark-warning-text/30');
+                devWarning.classList.add('bg-warning-light', 'text-warning-text', 'border-warning-text/20');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+        
+        function initDarkMode() {
+            // 检查本地存储的偏好设置
+            const savedMode = localStorage.getItem('darkMode');
+            
+            if (savedMode === 'enabled') {
+                applyDarkMode(true);
+            } else if (savedMode === 'disabled') {
+                applyDarkMode(false);
+            } else {
+                // 没有保存的偏好，使用系统设置
+                applyDarkMode(checkSystemDarkMode());
+            }
+            
+            // 监听系统主题变化
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                applyDarkMode(e.matches);
+            });
+            
+            // 水波纹效果实现
+            function createRipple(event) {
+                const button = event.currentTarget;
+                const circle = document.createElement("span");
+                const diameter = Math.max(button.clientWidth, button.clientHeight);
+                const radius = diameter / 2;
+                
+                circle.style.width = circle.style.height = `${diameter}px`;
+                circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
+                circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
+                circle.classList.add("ripple");
+                
+                const ripple = button.getElementsByClassName("ripple")[0];
+                if (ripple) {
+                    ripple.remove();
+                }
+                
+                button.appendChild(circle);
+            }
+            
+            // 顶部主题切换按钮事件
+            const themeToggleTop = document.getElementById('theme-toggle-top');
+            themeToggleTop.addEventListener('click', (e) => {
+                createRipple(e);
+                const isDark = document.documentElement.classList.contains('dark');
+                applyDarkMode(!isDark);
+            });
+            
+            // 初始化警告Banner关闭功能
+            const closeWarningBtn = document.getElementById('close-warning');
+            const devWarning = document.getElementById('dev-warning');
+            
+            closeWarningBtn.addEventListener('click', () => {
+                // 添加淡出动画
+                devWarning.style.opacity = '0';
+                devWarning.style.height = devWarning.offsetHeight + 'px';
+                
+                setTimeout(() => {
+                    devWarning.style.height = '0';
+                    devWarning.style.padding = '0';
+                    devWarning.style.margin = '0';
+                    devWarning.style.border = 'none';
+                    devWarning.style.overflow = 'hidden';
+                    
+                    // 完全隐藏
+                    setTimeout(() => {
+                        devWarning.style.display = 'none';
+                    }, 300);
+                }, 300);
+                
+                // 保存用户关闭状态
+                localStorage.setItem('hideDevWarning', 'true');
+            });
+            
+            // 检查是否应该隐藏警告Banner
+            if (localStorage.getItem('hideDevWarning') === 'true') {
+                devWarning.style.display = 'none';
+            }
+        }
+
+        // 侧边栏和内容区动画控制
+        function initLayoutAnimation() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+            const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+            const sidebarCollapseBtn = document.getElementById('sidebar-collapse-btn');
+            // 侧边栏切换按钮（窄屏顶部）
+            const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
+            const sidebarToggleIcon = document.getElementById('sidebar-toggle-icon');
+            // 侧边栏切换按钮（宽屏悬浮）
+            const sidebarFloatBtn = document.getElementById('sidebar-float-btn');
+            const sidebarFloatIcon = document.getElementById('sidebar-float-icon');
+            // 导航栏左侧元素
+            const mainLogo = document.getElementById('main-logo');
+            const mainTitle = document.getElementById('main-title');
+            const navLeftContainer = document.querySelector('.nav-left-container');
+            
+            // 获取侧边栏标题元素
+            const sidebarTitle = document.getElementById('sidebar-title');
+            // 获取侧边栏头部元素
+            const sidebarHeader = document.querySelector('#sidebar > div:first-child');
+            
+            // 跟踪侧边栏状态
+            let sidebarVisible = false; // 默认隐藏
+            let isNarrowScreen = window.innerWidth < 1024;
+            const sidebarWidth = 256; // 固定侧边栏宽度
+            
+            // 更新切换按钮和导航元素显示状态
+            function updateNavElements() {
+                if (sidebarVisible) {
+                    // 侧边栏展开时，按钮显示关闭图标并隐藏（仅窄屏）
+                    if (!isNarrowScreen) {
+                        sidebarFloatIcon.textContent = 'chevron_left';
+                        // 侧边栏展开时隐藏悬浮按钮
+                        sidebarFloatBtn.classList.add('hidden-btn');
+                    } else {
+                        sidebarToggleIcon.textContent = 'close';
+                        sidebarToggleBtn.classList.add('opacity-0');
+                        sidebarToggleBtn.classList.add('pointer-events-none');
+                    }
+                    
+                    // 图标和文字顶格显示（移除左侧间距）
+                    mainLogo.classList.remove('ml-3');
+                    mainTitle.classList.remove('ml-3');
+                    mainLogo.classList.add('ml-0');
+                    mainTitle.classList.add('ml-3'); // 保持图标和文字之间的间距
+                } else {
+                    // 侧边栏收起时，按钮显示菜单图标并显示（仅窄屏）
+                    if (!isNarrowScreen) {
+                        sidebarFloatIcon.textContent = 'chevron_right';
+                        // 侧边栏收起时显示悬浮按钮
+                        sidebarFloatBtn.classList.remove('hidden-btn');
+                    } else {
+                        sidebarToggleIcon.textContent = 'menu';
+                        sidebarToggleBtn.classList.remove('opacity-0');
+                        sidebarToggleBtn.classList.remove('pointer-events-none');
+                    }
+                    
+                    // 恢复图标和文字的左侧间距
+                    mainLogo.classList.remove('ml-0');
+                    mainTitle.classList.remove('ml-3');
+                    mainLogo.classList.add('ml-0');
+                    mainTitle.classList.add('ml-3');
+                }
+            }
+            
+            // 更新屏幕宽度状态
+            function updateScreenWidthStatus() {
+                const wasNarrowScreen = isNarrowScreen;
+                isNarrowScreen = window.innerWidth < 1024;
+                
+                if (isNarrowScreen) {
+                    // 窄屏设备默认隐藏侧边栏
+                    sidebarVisible = false;
+                    updateLayout(false);
+                } else {
+                    // 宽屏设备默认展开侧边栏
+                    sidebarVisible = true;
+                    updateLayout(true);
+                }
+                
+                // 更新导航元素状态
+                updateNavElements();
+            }
+            
+            // 更新侧边栏和内容区布局
+            function updateLayout(visible) {
+                sidebarVisible = visible;
+                
+                if (isNarrowScreen) {
+                    // 窄屏设备逻辑
+                    if (visible) {
+                        // 展开侧边栏，覆盖右栏
+                        sidebar.style.width = '80%';
+                        sidebar.classList.remove('-translate-x-full');
+                        sidebar.classList.add('translate-x-0');
+                        sidebarBackdrop.classList.remove('hidden', 'opacity-0');
+                        sidebarBackdrop.classList.add('opacity-100');
+                        // 显示侧边栏头部和标题
+                        if (sidebarHeader) sidebarHeader.classList.remove('hidden');
+                        if (sidebarTitle) sidebarTitle.classList.remove('hidden');
+                    } else {
+                        // 收起侧边栏，显示全屏右栏
+                        sidebar.classList.remove('translate-x-0');
+                        sidebar.classList.add('-translate-x-full');
+                        // 淡出遮罩层
+                        sidebarBackdrop.classList.remove('opacity-100');
+                        sidebarBackdrop.classList.add('opacity-0');
+                        setTimeout(() => {
+                            sidebarBackdrop.classList.add('hidden');
+                            sidebar.style.width = '0';
+                            // 隐藏侧边栏头部和标题
+                            if (sidebarHeader) sidebarHeader.classList.add('hidden');
+                            if (sidebarTitle) sidebarTitle.classList.add('hidden');
+                        }, 300);
+                    }
+                } else {
+                    // 宽屏设备逻辑
+                    if (visible) {
+                        // 展开侧边栏，挤压右栏
+                        sidebar.style.width = `${sidebarWidth}px`;
+                        mainContent.style.marginLeft = `${sidebarWidth}px`;
+                        // 显示侧边栏头部和标题
+                        if (sidebarHeader) sidebarHeader.classList.remove('hidden');
+                        if (sidebarTitle) sidebarTitle.classList.remove('hidden');
+                    } else {
+                        // 隐藏侧边栏，右栏全屏
+                        sidebar.style.width = '0';
+                        mainContent.style.marginLeft = '0';
+                        // 隐藏侧边栏头部和标题
+                        if (sidebarHeader) sidebarHeader.classList.add('hidden');
+                        if (sidebarTitle) sidebarTitle.classList.add('hidden');
+                    }
+                }
+                
+                // 更新导航元素状态
+                updateNavElements();
+            }
+            
+            // 卡片动画
+            function animateCards() {
+                const cards = document.querySelectorAll('#software-list .md-card');
+                cards.forEach((card, index) => {
+                    // 重置动画状态
+                    card.classList.remove('card-enter-active');
+                    card.offsetHeight; // 触发重绘
+                    
+                    // 依次添加动画
+                    setTimeout(() => {
+                        card.classList.add('card-enter-active');
+                    }, 50 * index);
+                });
+            }
+            
+            // 窄屏顶部按钮点击事件
+            sidebarToggleBtn.addEventListener('click', () => {
+                updateLayout(!sidebarVisible);
+            });
+            
+            // 宽屏悬浮按钮点击事件
+            sidebarFloatBtn.addEventListener('click', () => {
+                updateLayout(!sidebarVisible);
+            });
+            
+            // 初始化
+            updateScreenWidthStatus();
+            
+            // 窗口大小变化时更新
+            window.addEventListener('resize', () => {
+                updateScreenWidthStatus();
+                // 触发卡片重新布局动画
+                animateCards();
+            });
+            
+            // 宽屏收起/展开按钮点击事件
+            sidebarCollapseBtn.addEventListener('click', () => {
+                if (!isNarrowScreen) {
+                    // 切换展开/收起状态
+                    updateLayout(!sidebarVisible);
+                }
+            });
+            
+            // 点击遮罩层关闭侧边栏
+            sidebarBackdrop.addEventListener('click', () => {
+                if (isNarrowScreen && sidebarVisible) {
+                    updateLayout(false);
+                }
+            });
+            
+            // 点击分类后在窄屏幕上收起侧边栏
+            document.addEventListener('click', (e) => {
+                if (isNarrowScreen && sidebarVisible && e.target.closest('.md-nav-item')) {
+                    updateLayout(false);
+                }
+            });
+            
+            return { animateCards };
+        }
+
+        // 屏蔽谷歌翻译
+        function blockGoogleTranslate() {
+            const meta = document.createElement('meta');
+            meta.name = 'google';
+            meta.content = 'notranslate';
+            document.head.appendChild(meta);
+            
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    mutation.addedNodes.forEach((node) => {
+                        if (node.nodeType === 1) {
+                            if (node.classList.contains('skiptranslate') || 
+                                node.getAttribute('id') === 'google_translate_element') {
+                                node.remove();
+                            }
+                            
+                            if (node.hasAttribute('translate') && node.getAttribute('translate') !== 'no') {
+                                node.setAttribute('translate', 'no');
+                            }
+                        }
+                    });
+                });
+            });
+            
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        }
+
+        // 示例数据
+        const exampleData = [
+            {
+                "class_name": "开发工具",
+                "class_icon": "code",
+                "apps": [
+                    {
+                        "app_name": "VS Code",
+                        "app_icon_type": "code",
+                        "app_version": "1.83.1",
+                        "app_owner": "Microsoft",
+                        "app_icon": "https://picsum.photos/id/0/64/64",
+                        "app_website": "https://code.visualstudio.com/",
+                        "app_downloadurl": "https://code.visualstudio.com/Download",
+                        "app_downloadmirror": "https://mirror.example.com/vscode"
+                    },
+                    {
+                        "app_name": "Git",
+                        "app_icon_type": "code",
+                        "app_version": "2.42.0",
+                        "app_owner": "Git Foundation",
+                        "app_icon": "https://picsum.photos/id/1/64/64",
+                        "app_website": "https://git-scm.com/",
+                        "app_downloadurl": "https://git-scm.com/downloads",
+                        "app_downloadmirror": "https://mirror.example.com/git"
+                    }
+                ]
+            },
+            {
+                "class_name": "办公软件",
+                "class_icon": "description",
+                "apps": [
+                    {
+                        "app_name": "LibreOffice",
+                        "app_icon_type": "description",
+                        "app_version": "7.6.2",
+                        "app_owner": "The Document Foundation",
+                        "app_icon": "https://picsum.photos/id/3/64/64",
+                        "app_website": "https://www.libreoffice.org/",
+                        "app_downloadurl": "https://www.libreoffice.org/download/download/",
+                        "app_downloadmirror": "https://mirror.example.com/libreoffice"
+                    },
+                    {
+                        "app_name": "表格工具",
+                        "app_icon_type": "grid_on",
+                        "app_version": "4.8.3",
+                        "app_owner": "办公套件公司",
+                        "app_icon": "https://picsum.photos/id/4/64/64",
+                        "app_website": "https://example.com/spreadsheet",
+                        "app_downloadurl": "https://example.com/download/spreadsheet",
+                        "app_downloadmirror": "https://mirror.example.com/spreadsheet"
+                    }
+                ]
+            },
+            {
+                "class_name": "图形设计",
+                "class_icon": "brush",
+                "apps": [
+                    {
+                        "app_name": "图像编辑器",
+                        "app_icon_type": "photo",
+                        "app_version": "3.5.0",
+                        "app_owner": "创意软件公司",
+                        "app_icon": "https://picsum.photos/id/5/64/64",
+                        "app_website": "https://example.com/editor",
+                        "app_downloadurl": "https://example.com/download/imageeditor",
+                        "app_downloadmirror": "https://mirror.example.com/imageeditor"
+                    }
+                ]
+            },
+            {
+                "class_name": "系统工具",
+                "class_icon": "settings",
+                "apps": [
+                    {
+                        "app_name": "系统设置工具",
+                        "app_icon_type": "settings",
+                        "app_version": "2.1.0",
+                        "app_owner": "系统工具团队",
+                        "app_icon": "https://picsum.photos/id/6/64/64",
+                        "app_website": "https://example.com/system",
+                        "app_downloadurl": "https://example.com/download/system",
+                        "app_downloadmirror": "https://mirror.example.com/system"
+                    }
+                ]
+            },
+            {
+                "class_name": "网络工具",
+                "class_icon": "public",
+                "apps": [
+                    {
+                        "app_name": "网络浏览器",
+                        "app_icon_type": "public",
+                        "app_version": "118.0.5993.88",
+                        "app_owner": "浏览器开发团队",
+                        "app_icon": "https://picsum.photos/id/7/64/64",
+                        "app_website": "https://example.com/browser",
+                        "app_downloadurl": "https://example.com/download/browser",
+                        "app_downloadmirror": "https://mirror.example.com/browser"
+                    }
+                ]
+            }
+        ];
+
+        // 渲染分类和软件列表
+        let appData = [];
+        let activeCategory = null;
+        let layoutAnimations = null;
+
+        function renderCategories() {
+            const categoryList = document.getElementById('category-list');
+            categoryList.innerHTML = '';
+            
+            const allItem = createCategoryItem('全部软件', 'grid_view', true);
+            categoryList.appendChild(allItem.element);
+            
+            const divider = document.createElement('div');
+            divider.className = 'md-divider';
+            categoryList.appendChild(divider);
+            
+            appData.forEach((category, index) => {
+                const icon = category.class_icon || getCategoryIcon(category.class_name);
+                const item = createCategoryItem(category.class_name, icon, false, index);
+                categoryList.appendChild(item.element);
+            });
+        }
+
+        function createCategoryItem(name, icon, isAll, index = -1) {
+            const element = document.createElement('div');
+            element.className = `md-nav-item ${isAll ? 'md-nav-item-active' : ''}`;
+            element.dataset.category = name;
+            element.innerHTML = `
+                <span class="icon-text-gap">
+                    <i class="material-icons">${icon}</i>
+                    <span class="text-lg">${name}</span>
+                </span>
+                <span class="bg-md-primary text-white text-sm rounded-full px-2 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                    ${isAll ? getTotalAppsCount() : appData[index]?.apps?.length || 0}
+                </span>
+            `;
+            
+            element.addEventListener('click', () => {
+                showCategory(name);
+                updateActiveCategory(name, icon);
+            });
+            
+            return { element };
+        }
+
+        function getCategoryIcon(categoryName) {
+            const icons = {
+                '全部软件': 'grid_view',
+                '开发工具': 'code',
+                '办公软件': 'description',
+                '图形设计': 'brush',
+                '系统工具': 'settings',
+                '网络工具': 'public',
+                '表格软件': 'grid_on',
+                '多媒体': 'movie',
+                '通讯工具': 'chat'
+            };
+            
+            return icons[categoryName] || 'folder';
+        }
+
+        function getAppIcon(appName) {
+            const icons = {
+                '代码': 'code',
+                '编辑器': 'edit',
+                '文档': 'description',
+                '表格': 'grid_on',
+                '浏览器': 'public',
+                '设置': 'settings',
+                '图像': 'photo',
+                '设计': 'brush'
+            };
+            
+            for (const [keyword, icon] of Object.entries(icons)) {
+                if (appName.includes(keyword)) {
+                    return icon;
+                }
+            }
+            
+            return 'apps';
+        }
+
+        function getTotalAppsCount() {
+            return appData.reduce((total, category) => total + (category.apps?.length || 0), 0);
+        }
+
+        function updateActiveCategory(categoryName, icon) {
+            const currentCategory = document.getElementById('current-category');
+            currentCategory.innerHTML = `
+                <i class="material-icons text-md-primary">${icon}</i>
+                <span>${categoryName}</span>
+            `;
+            currentCategory.classList.add('icon-text-gap');
+            
+            document.querySelectorAll('.md-nav-item').forEach(tab => {
+                if (tab.dataset.category === categoryName) {
+                    tab.classList.add('md-nav-item-active');
+                } else {
+                    tab.classList.remove('md-nav-item-active');
+                }
+            });
+            
+            activeCategory = categoryName;
+        }
+
+        function showCategory(categoryName) {
+            const softwareList = document.getElementById('software-list');
+            softwareList.innerHTML = '';
+            
+            let appsToShow = [];
+            
+            if (categoryName === '全部软件') {
+                appData.forEach(category => {
+                    appsToShow = appsToShow.concat(category.apps || []);
+                });
+            } else {
+                const category = appData.find(c => c.class_name === categoryName);
+                appsToShow = category?.apps || [];
+            }
+            
+            appsToShow.forEach(app => {
+                const card = createSoftwareCard(app);
+                softwareList.appendChild(card);
+            });
+            
+            if (appsToShow.length === 0) {
+                softwareList.innerHTML = `
+                    <div class="py-16 text-center">
+                        <i class="material-icons text-5xl text-md-on-surface-variant mb-4">folder_open</i>
+                        <p class="text-xl text-md-on-surface-variant">该分类下没有软件</p>
+                    </div>
+                `;
+            } else {
+                // 触发卡片动画
+                if (layoutAnimations) {
+                    layoutAnimations.animateCards();
+                }
+            }
+        }
+
+        function createSoftwareCard(app) {
+            const cardTemplate = document.getElementById('software-card-template');
+            const card = cardTemplate.content.cloneNode(true).children[0];
+            
+            const appIconType = app.app_icon_type || getAppIcon(app.app_name);
+            
+            card.querySelector('.app-name span:last-child').textContent = app.app_name;
+            card.querySelector('.app-icon-inline i').className = `material-icons`;
+            card.querySelector('.app-icon-inline i').textContent = appIconType;
+            card.querySelector('.app-version span').textContent = `版本: ${app.app_version}`;
+            card.querySelector('.app-owner span').textContent = app.app_owner;
+            card.querySelector('.app-icon').src = app.app_icon;
+            card.querySelector('.app-icon').alt = `${app.app_name} 图标`;
+            
+            const websiteLink = card.querySelector('.app-website span');
+            websiteLink.textContent = app.app_website;
+            card.querySelector('.app-website').href = app.app_website;
+            card.querySelector('.app-website-btn').href = app.app_website;
+            card.querySelector('.app-download-btn').href = app.app_downloadurl;
+            const mirrorBtn = card.querySelector('.app-mirror-btn');
+            mirrorBtn.href = app.app_downloadmirror;
+            
+            if (!app.app_downloadmirror) {
+                mirrorBtn.classList.remove('md-btn-secondary');
+                mirrorBtn.classList.add('opacity-50');
+                mirrorBtn.removeAttribute('href');
+                mirrorBtn.removeAttribute('target');
+                mirrorBtn.style.pointerEvents = 'none';
+            }
+            
+            return card;
+        }
+
+        // 初始化
+        async function init() {
+            // 初始化主题和动画
+            initDarkMode();
+            layoutAnimations = initLayoutAnimation();
+            blockGoogleTranslate();
+            
+            // 加载数据
+            try {
+                const response = await fetch('/config.json');
+                if (response.ok) {
+                    const config = await response.json();
+                    appData = config.categories || config;
+                } else {
+                    appData = exampleData;
+                    console.log('使用示例数据');
+                }
+            } catch (error) {
+                appData = exampleData;
+                console.log('加载数据失败:', error);
+            }
+
+            // 渲染页面内容
+            renderCategories();
+            
+            if (appData.length > 0) {
+                showCategory('全部软件');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+
+
+    </body></html>
