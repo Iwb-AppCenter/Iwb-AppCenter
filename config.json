@@ -1,0 +1,88 @@
+{
+    "version": "1.0.0",
+    "description": "软件下载中心配置文件，包含分类和软件信息",
+    "categories": [
+        {
+            "class_name": "开发工具",
+            "description": "用于软件开发的相关工具",
+            "apps": [
+                {
+                    "app_name": "VS Code",
+                    "app_version": "1.83.1",
+                    "app_owner": "Microsoft",
+                    "app_icon": "icons/vscode.png",
+                    "app_website": "https://code.visualstudio.com/",
+                    "app_downloadurl": "https://code.visualstudio.com/Download",
+                    "app_downloadmirror": "https://mirror.example.com/vscode"
+                },
+                {
+                    "app_name": "Git",
+                    "app_version": "2.42.0",
+                    "app_owner": "Git Foundation",
+                    "app_icon": "icons/git.png",
+                    "app_website": "https://git-scm.com/",
+                    "app_downloadurl": "https://git-scm.com/downloads",
+                    "app_downloadmirror": "https://mirror.example.com/git"
+                },
+                {
+                    "app_name": "Node.js",
+                    "app_version": "20.9.0",
+                    "app_owner": "Node.js Foundation",
+                    "app_icon": "icons/nodejs.png",
+                    "app_website": "https://nodejs.org/",
+                    "app_downloadurl": "https://nodejs.org/en/download/",
+                    "app_downloadmirror": ""
+                }
+            ]
+        },
+        {
+            "class_name": "办公软件",
+            "description": "用于文档处理、表格制作等办公场景的软件",
+            "apps": [
+                {
+                    "app_name": "LibreOffice",
+                    "app_version": "7.6.2",
+                    "app_owner": "The Document Foundation",
+                    "app_icon": "icons/libreoffice.png",
+                    "app_website": "https://www.libreoffice.org/",
+                    "app_downloadurl": "https://www.libreoffice.org/download/download/",
+                    "app_downloadmirror": "https://mirror.example.com/libreoffice"
+                },
+                {
+                    "app_name": "WPS Office",
+                    "app_version": "11.1.0.15212",
+                    "app_owner": "Kingsoft",
+                    "app_icon": "icons/wps.png",
+                    "app_website": "https://www.wps.com/",
+                    "app_downloadurl": "https://www.wps.com/download/",
+                    "app_downloadmirror": "https://mirror.example.com/wps"
+                }
+            ]
+        },
+        {
+            "class_name": "图形设计",
+            "description": "用于图像编辑、设计创作的软件",
+            "apps": [
+                {
+                    "app_name": "GIMP",
+                    "app_version": "2.10.34",
+                    "app_owner": "GIMP Development Team",
+                    "app_icon": "icons/gimp.png",
+                    "app_website": "https://www.gimp.org/",
+                    "app_downloadurl": "https://www.gimp.org/downloads/",
+                    "app_downloadmirror": "https://mirror.example.com/gimp"
+                },
+                {
+                    "app_name": "Inkscape",
+                    "app_version": "1.3.2",
+                    "app_owner": "Inkscape Project",
+                    "app_icon": "icons/inkscape.png",
+                    "app_website": "https://inkscape.org/",
+                    "app_downloadurl": "https://inkscape.org/release/",
+                    "app_downloadmirror": ""
+                }
+            ]
+        }
+    ]
+}
+    
