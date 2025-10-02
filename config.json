@@ -13,7 +13,7 @@
                     "app_icon": "icons/classisland.png",
                     "app_website": "https://classisland.tech",
                     "app_downloadurl": "https://classisland.tech/download",
-                    "app_downloadmirror": "https://"
+                    "app_downloadmirror": ""
                 },
                 {
                     "app_name": "ClassWidgets",
@@ -22,18 +22,87 @@
                     "app_icon": "icons/classwidgets.png",
                     "app_website": "https://classwidgets.rinlit.cn/zh/",
                     "app_downloadurl": "https://classwidgets.rinlit.cn/zh/download/",
-                    "app_downloadmirror": "httr.example.com/git"
+                    "app_downloadmirror": ""
                 },
                 {
-                    "app_name": "",
-                    "app_version": "20.9.0",
-                    "app_owner": "Node.js Foundation",
-                    "app_icon": "icons/nodejs.png",
-                    "app_website": "https://nodejs.org/",
-                    "app_downloadurl": "https://nodejs.org/en/download/",
+                    "app_name": "ZongziTEK黑板贴",
+                    "app_version": "3.3",
+                    "app_owner": "ZongziTEK",
+                    "app_icon": "icons/zongzitek.png",
+                    "app_website": "https://zztek.top/",
+                    "app_downloadurl": "https://zztek.top/jump.html",
                     "app_downloadmirror": ""
                 }
+              
+                {
+                    "app_name": "Sticky-attention",
+                    "app_version": "1.2.0.1",
+                    "app_owner": "jizilin6732",
+                    "app_icon": "icons/stickyattention.png",
+                    "app_website": "https://sa.undefined.ac.cn/",
+                    "app_downloadurl": "https://github.com/Sticky-attention/Sticky-attention/releases",
+                    "app_downloadmirror": ""
+                },
+                {
+                    "app_name": "考试看板ExamShowboard-Legacy（已过时）",
+                    "app_version": "1.2.5",
+                    "app_owner": "Hello8693",
+                    "app_icon": "icons/ExamShowboard.png",
+                    "app_website": "https://github.com/ExamAware/ExamShowboard-Legacy",
+                    "app_downloadurl": "https://github.com/ExamAware/ExamShowboard-Legacy/releases",
+                    "app_downloadmirror": ""
+                },
+
+                {
+                    "app_name": "ExtraIsland",
+                    "app_version": "R0.50fix1",
+                    "app_owner": "Hello8693",
+                    "app_icon": "icons/extraIsland.png",
+                    "app_website": "https://docs.lipoly.ink/ExtraIsland/",
+                    "app_downloadurl": "https://docs.lipoly.ink/ExtraIsland/",
+                    "app_downloadmirror": "https://gitlab.com/LiPolymer/ExtraIsland/-/releases"
+                },
+           
+                {
+                    "app_name": "凌云班级组件 LingYun Class Widgets",
+                    "app_version": "1.6.18",
+                    "app_owner": "Yamikani-Flipped",
+                    "app_icon": "icons/LingYun.png",
+                    "app_website": "https://github.com/Yamikani-Flipped/LingYun-Class-Widgets/",
+                    "app_downloadurl": "https://github.com/Yamikani-Flipped/LingYun-Class-Widgets/releases",
+                    "app_downloadmirror": ""
+                },
+                {
+                    "app_name": "Education Clock",
+                    "app_version": "5.4",
+                    "app_owner": "Return-Log",
+                    "app_icon": "icons/Education-Clock.png",
+                    "app_website": "https://github.com/Return-Log/Education-Clock/",
+                    "app_downloadurl": "https://github.com/Return-Log/Education-Clock/releases",
+                    "app_downloadmirror": ""
+                },
+                {
+                    "app_name": "ClassBoardSharp",
+                    "app_version": "1.0.24",
+                    "app_owner": "Candlest",
+                    "app_icon": "icons/ClassBoardSharp.png",
+                    "app_website": "https://github.com/Candlest/ClassBoard",
+                    "app_downloadurl": "https://github.com/Candlest/ClassBoard/releases",
+                    "app_downloadmirror": ""
+                },
+                {
+                    "app_name": "Class Hot Search 班级热搜排行",
+                    "app_version": "1.2.0",
+                    "app_owner": "思锐工作室 SR-Studio",
+                    "app_icon": "icons/ClassHotSearch.png",
+                    "app_website": "https://github.com/SRInternet-Studio/Class_Hot_Search/",
+                    "app_downloadurl": "https://github.com/SRInternet-Studio/Class_Hot_Search/releases",
+                    "app_downloadmirror": ""
+                },
+
+           
             ]
+
         },
         {
             "class_name": "办公软件",
